@@ -3,10 +3,12 @@ package com.multitreading;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Task {
 
-    static Map<Integer, Integer> map = new HashMap<>();
+    // HashMap has been replaced by ConcurrentHashMap
+    static Map<Integer, Integer> map = new ConcurrentHashMap<>();
     final static Integer MAX_KEY = Integer.MAX_VALUE;
     final static Integer MAX_VALUE = 10;
 

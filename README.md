@@ -1,6 +1,4 @@
 # multithreading-concurrency-prototypes
 Multithreading and Concurrency Prototypes
 
-### Build 
-
-* mvn package
+### Task1 - usage of ConcurrentHashMap 
