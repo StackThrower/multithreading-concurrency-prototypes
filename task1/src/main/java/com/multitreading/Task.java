@@ -1,14 +1,18 @@
 package com.multitreading;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static java.lang.Thread.sleep;
+
 public class Task {
 
     // HashMap has been replaced by ConcurrentHashMap
-    static Map<Integer, Integer> map = new ConcurrentHashMap<>();
+    final static Map<Integer, Integer> mapNumbers = new ConcurrentHashMap<>();
+    final static List<Long> times = new ArrayList<>();
     final static Integer MAX_KEY = Integer.MAX_VALUE;
     final static Integer MAX_VALUE = 10;
 
@@ -18,18 +22,31 @@ public class Task {
         public void run() {
 
             Random random = new Random();
+            long endTime, startTime, diffTime;
 
             while (true) {
                 Integer key = random.nextInt(MAX_KEY) + 1;
                 Integer value = random.nextInt(MAX_VALUE) + 1;
 
-                map.put(key, value);
+
+                startTime = System.currentTimeMillis();
+
+                mapNumbers.put(key, value);
+
+                endTime = System.currentTimeMillis();
+
+                diffTime = endTime - startTime;
+
+                System.out.println("endTime:" + endTime + ", startTime:" + startTime + " diffTime:" + (diffTime));
+
+                times.add(diffTime);
 
                 System.out.println("Added new value key:" + key + ", value:" + value);
 
                 try {
-                    Thread.sleep(500);
+                    sleep(500);
                 } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -44,15 +61,17 @@ public class Task {
 
                 Integer count = 0;
 
-                for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+                for (Map.Entry<Integer, Integer> entry : mapNumbers.entrySet()) {
                     count += entry.getValue();
 
                 }
 
-                System.out.println("Current total:" + count);
+                long averageTime =  times.stream().reduce(0L, Long::sum) / times.size();
+
+                System.out.println("Current total:" + count + " av time:" + averageTime);
 
                 try {
-                    Thread.sleep(500);
+                    sleep(500);
                 } catch (InterruptedException e) {
                 }
             }
