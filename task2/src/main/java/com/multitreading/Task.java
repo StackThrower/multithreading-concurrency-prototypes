@@ -10,6 +10,7 @@ public class Task {
 
     final static List<Integer> numbers = new ArrayList<>();
     final static Integer MAX_VALUE = 1000;
+    final static Object lock = new Object();
 
     static class NumberCreator implements Runnable {
 
@@ -19,8 +20,11 @@ public class Task {
             while (true) {
 
                 Random random = new Random();
-                numbers.add(random.nextInt(Task.MAX_VALUE));
-
+                synchronized (lock) {
+                    Integer number = random.nextInt(Task.MAX_VALUE);
+                    numbers.add(number);
+                    System.out.println(Thread.currentThread().getName() + " - Added number:" + number);
+                }
                 try {
                     sleep(500);
                 } catch (InterruptedException e) {
@@ -38,10 +42,10 @@ public class Task {
         public void run() {
 
             while (true) {
-
-                Integer sum = numbers.stream().reduce(0, Integer::sum);
-
-                System.out.println(Thread.currentThread().getName() + " - TOTAL:" + sum);
+                synchronized (lock) {
+                    Integer sum = numbers.stream().reduce(0, Integer::sum);
+                    System.out.println(Thread.currentThread().getName() + " - TOTAL:" + sum);
+                }
 
                 try {
                     sleep(500);
@@ -59,10 +63,12 @@ public class Task {
 
             while (true) {
 
-                Integer squareSum = numbers.stream().reduce(0, (subtotal, element) -> subtotal + (element * element));
+                synchronized (lock) {
+                    Integer squareSum = numbers.stream().reduce(0, (subtotal, element) -> subtotal + (element * element));
 
-                System.out.println(Thread.currentThread().getName() + " - Square sum:" + squareSum);
-                System.out.println(Thread.currentThread().getName() + " - Square root of sum of squares of all numbers: " + Math.sqrt(squareSum));
+                    System.out.println(Thread.currentThread().getName() + " - Square sum:" + squareSum);
+                    System.out.println(Thread.currentThread().getName() + " - Square root of sum of squares of all numbers: " + Math.sqrt(squareSum));
+                }
 
                 try {
                     sleep(500);
