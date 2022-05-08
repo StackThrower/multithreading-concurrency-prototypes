@@ -14,3 +14,6 @@ Make these calculations thread-safe using synchronization block. Fix the possibl
 * Implement producer, which will generate and post randomly messages to the queue.
 * Implement consumer, which will consume messages on specific topic and log to the console message payload.
 * (Optional) Application should create several consumers and producers that run in parallel.
+
+### Task4 - Simple Object Pool
+Create simple object pool with support for multithreaded environment. No any extra inheritance, polymorphism or generics needed here, just implementation of simple class
