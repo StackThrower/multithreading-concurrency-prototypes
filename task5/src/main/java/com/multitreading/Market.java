@@ -46,13 +46,15 @@ public class Market {
     }
 
 
-    public void init() {
+    public void start() {
         initRandomAccounts();
         initExchangeRates();
+
+        Trading.trade(exchangeRates, accounts);
     }
 
     public static void main(String[] args) {
         Market market = new Market();
-        market.init();
+        market.start();
     }
 }

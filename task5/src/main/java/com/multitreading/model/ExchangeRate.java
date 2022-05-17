@@ -15,6 +15,11 @@ public class ExchangeRate {
         this.rate = BigDecimal.valueOf(rate);
     }
 
+    public ExchangeRate(Currency primary, Currency secondary) {
+        this.primary = primary;
+        this.secondary =secondary;
+        this.rate = BigDecimal.valueOf(0);
+    }
     public Currency getPrimary() {
         return primary;
     }
@@ -37,5 +42,19 @@ public class ExchangeRate {
 
     public void setRate(BigDecimal rate) {
         this.rate = rate;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+
+        ExchangeRate exchangeRate = (ExchangeRate) object;
+
+        return this.primary.equals(exchangeRate.getPrimary()) &&
+                this.secondary.equals(exchangeRate.getSecondary());
+    }
+
+    @Override
+    public int hashCode() {
+        return 53 * primary.hashCode() + secondary.hashCode();
     }
 }
