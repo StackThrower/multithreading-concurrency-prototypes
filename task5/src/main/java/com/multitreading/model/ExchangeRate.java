@@ -9,6 +9,12 @@ public class ExchangeRate {
     private Currency secondary;
     private BigDecimal rate;
 
+    public ExchangeRate(Currency primary, Currency secondary, double rate) {
+        this.primary = primary;
+        this.secondary =secondary;
+        this.rate = BigDecimal.valueOf(rate);
+    }
+
     public Currency getPrimary() {
         return primary;
     }

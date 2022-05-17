@@ -1,6 +1,7 @@
 package com.multitreading;
 
 import com.multitreading.model.Account;
+import com.multitreading.model.ExchangeRate;
 import com.multitreading.model.Wallet;
 
 import java.util.*;
@@ -11,6 +12,15 @@ public class Market {
     public static final int MIN_ACCOUNT_COUNT = 2;
 
     List<Account> accounts = new ArrayList<>();
+    Set<ExchangeRate> exchangeRates = new HashSet<>();
+
+    private void initExchangeRates() {
+        Random random = new Random();
+        exchangeRates.add(new ExchangeRate(Currency.USD, Currency.EUR, random.nextDouble()));
+        exchangeRates.add(new ExchangeRate(Currency.USD, Currency.GBP, random.nextDouble()));
+        System.out.println("Rates have been initialized");
+    }
+
 
     private void initRandomAccounts() {
         Random random = new Random();
@@ -26,6 +36,9 @@ public class Market {
 
             accounts.add(new Account(wallets));
         }
+
+        System.out.println("Accounts have been initialized");
+
     }
 
     private void saveAccounts() {
@@ -33,12 +46,13 @@ public class Market {
     }
 
 
-    public void demo() {
+    public void init() {
         initRandomAccounts();
+        initExchangeRates();
     }
 
     public static void main(String[] args) {
         Market market = new Market();
-        market.demo();
+        market.init();
     }
 }
